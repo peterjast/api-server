@@ -9,22 +9,6 @@ const foodSchema = require('../src/models/food.js')
 const food = new DataCollection(foodSchema);
 const clothes = new DataCollection(clothesSchema)
 
-describe('API SERVER:', () => {
-
-  it('should respond with a 404 on bad route', async() => {
-    return mockRequest.get('/bad-route').then(data => {
-      expect(data.status).toBe(404);
-    })
-  });
-
-  it('should respond with a 404 on bad method', async() => {
-    return mockRequest.post('/clothes/1').then(data => {
-      expect(data.status).toBe(404);
-    })
-  });
-
-})
-
 describe('Food Actions', () => {
 
   it('can create() a new food item', () => {
@@ -48,27 +32,28 @@ describe('Food Actions', () => {
       .then(record => {
         return food.read(record._id)
           .then(item => {
-            Object.keys(item).forEach(key => {
-              expect(item[key].toEqual(expected[key]))
-            })
+              expect(record[item]).toEqual(expected[item])
           })
-      })
-    
-    });
+      })  
+  });
 
   it('can read all food items', () => {
     let obj = { name: 'test_food_3', calories: 9999, type: 'VEG' };
     let obj2 = { name: 'test_food_4', calories: 9999, type: 'MEAT' };
         
-    food.create(obj);
-    food.create(obj2);
-
-    return food.read()
-      .then(item => {
-        Object.keys(item[2]).forEach(key => {
-          expect(item[2][key].toEqual(obj[key]))
-          })
-        })     
+    return food.create(obj)
+    .then(record => {
+      return food.create(obj2)
+      .then(record => {
+        return food.read()
+        .then(item => {
+          expect(item[0].name).toEqual('test_food_1');
+          expect(item[1].name).toEqual('test_food_2');
+          expect(item[2].name).toEqual('test_food_3');
+          expect(item[3].name).toEqual('test_food_4');
+        })
+      })   
+    })    
   });
 
   it('can update() a food item', () => {
@@ -80,9 +65,7 @@ describe('Food Actions', () => {
       .then(record => {
         return food.update(record._id, updatedObj)
           .then(item => {
-            Object.keys(item).forEach(key => {
-              expect(item[key].toEqual(expected[key]))
-            })
+              expect(item.type).toEqual(expected.type)
           })
       })
     
@@ -95,8 +78,9 @@ describe('Food Actions', () => {
         .then(record => {
           return food.delete(record._id)
             .then(item => {
-              expect(item).toBe(null);
-              })
+              console.log(item);
+              expect(item._id).toEqual(record._id);
+            })
         })
       
       });
@@ -135,16 +119,20 @@ describe('Clothing Actions', () => {
     it('can read all clothing items', () => {
       let obj = { name: 'test_clothes_3', color: 'test_color', size: 'S', type: 'SHIRT' };
       let obj2 = { name: 'test_clothes_4', color: 'test_color', size: 'XL', type: 'OUTERWEAR' };
-          
-      clothes.create(obj);
-      clothes.create(obj2);
-  
-      return clothes.read()
-        .then(item => {
-          Object.keys(item[2]).forEach(key => {
-            expect(item[2][key].toEqual(obj[key]))
+
+      return clothes.create(obj)
+        .then(record => {
+          return clothes.create(obj2)
+          .then(record => {
+            return clothes.read()
+            .then(item => {
+              expect(item[0].name).toEqual('test_clothes_1');
+              expect(item[1].name).toEqual('test_clothes_2');
+              expect(item[2].name).toEqual('test_clothes_3');
+              expect(item[3].name).toEqual('test_clothes_4');
             })
-          })     
+          })   
+        }) 
     });
   
     it('can update() a clothing item', () => {
@@ -153,14 +141,12 @@ describe('Clothing Actions', () => {
       let expected = { name: 'test_clothes_5', color: 'test_color', size: 'S', type: 'PANTS' };
         
       return clothes.create(obj)
-        .then(record => {
-          return clothes.update(record._id, updatedObj)
-            .then(item => {
-              Object.keys(item).forEach(key => {
-                expect(item[key].toEqual(expected[key]))
-              })
-            })
-        })
+      .then(record => {
+        return clothes.update(record._id, updatedObj)
+          .then(item => {
+              expect(item.type).toEqual(expected.type)
+          })
+      })
       
       });
   
@@ -171,9 +157,10 @@ describe('Clothing Actions', () => {
           .then(record => {
             return clothes.delete(record._id)
               .then(item => {
-                expect(item).toBe(null);
-                })
-          })
+                console.log(item);
+                expect(item._id).toEqual(record._id);
+              })
+        })
         
         });
 
