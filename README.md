@@ -2,9 +2,9 @@
 
 Author: Peter Staker
 
-Deployed URL:
+Deployed URL: [https://api-server-ps.herokuapp.com/](https://api-server-ps.herokuapp.com/)
 
-PR: https://github.com/peterjast/api-server/pull/1
+PR: [https://github.com/peterjast/api-server/pull/1]
 
 * tests [report](https://github.com/peterjast/basic-auth/actions/runs/787554694)
 
@@ -13,6 +13,8 @@ PR: https://github.com/peterjast/api-server/pull/1
 ### .env requirements
 
 * PORT - Port Number
+
+* MONGODB_URI - Development -> mongodb://localhost:27017/data-collection
 
 ### Dependencies
 
