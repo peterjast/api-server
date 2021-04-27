@@ -2,16 +2,6 @@
 
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-
-dotenv.config();
-
-
-const MONGODB_URI = process.env.MONGODB_URI;
-
-const options = { useNewUrlParser: true, useUnifiedTopology: true }; 
-mongoose.connect(MONGODB_URI, options);
 
 const logger = require('./middleware/logger.js');
 const clothesRoutes = require('./routes/clothes.js');
@@ -32,9 +22,7 @@ app.use(errors);
 
 module.exports = {
   server: app,
-  start: port => {
-    app.listen(port, () => {
-      console.log(`server is up on ${port}`)
-    })
-  }
-}
+  start: (port) => {
+    app.listen(port, console.log(`Server is up and running on port: ${port}`));
+  },
+};
