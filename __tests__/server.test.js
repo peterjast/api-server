@@ -2,12 +2,13 @@
 
 require('@code-fellows/supergoose'); //this pulls in and configures and runs mongo memory server and supertest
 
+
 const DataCollection = require('../src/models/data-collection-class.js');
-const clothesSchema = require('../src/models/clothes.js')
-const foodSchema = require('../src/models/food.js')
+const clothesSchema = require('../src/models/clothes.js');
+const foodSchema = require('../src/models/food.js');
 
 const food = new DataCollection(foodSchema);
-const clothes = new DataCollection(clothesSchema)
+const clothes = new DataCollection(clothesSchema);
 
 describe('Food Actions', () => {
 

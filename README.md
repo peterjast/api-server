@@ -6,7 +6,7 @@ Deployed URL:
 
 PR: https://github.com/peterjast/api-server/pull/1
 
-* tests report
+* tests [report](https://github.com/peterjast/basic-auth/actions/runs/787554694)
 
 ## Setup
 
