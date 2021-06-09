@@ -4,8 +4,8 @@ const express = require('express');
 const app = express();
 
 const logger = require('./middleware/logger.js');
-const clothesRoutes = require('./routes/clothes.js');
-const foodRoutes = require('./routes/food.js');
+const cartItemRoutes = require('./routes/cartItem.js');
+const productRoutes = require('./routes/product.js');
 
 const notFound = require('./error-handlers/404.js');
 const errors = require('./error-handlers/500.js');
@@ -13,8 +13,8 @@ const errors = require('./error-handlers/500.js');
 app.use(express.json());
 
 app.use(logger);
-app.use(clothesRoutes);
-app.use(foodRoutes);
+app.use(cartItemRoutes);
+app.use(productRoutes);
 
 // these live at the bottom of your server
 app.use('*', notFound);
