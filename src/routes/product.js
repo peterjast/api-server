@@ -27,7 +27,7 @@ function getproduct(req, res) {
 }
 
 function getOneproduct(req, res) {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   product.read(id)
   .then(oneproduct => res.status(200).json(oneproduct))
   .catch(err => next(err));
